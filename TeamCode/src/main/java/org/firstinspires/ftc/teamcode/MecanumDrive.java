@@ -22,6 +22,10 @@ public class MecanumDrive extends LinearOpMode
         motorLB = hardwareMap.dcMotor.get("motorLB");
         motorRB = hardwareMap.dcMotor.get("motorRB");
         motorLF = hardwareMap.dcMotor.get("motorLF");
+        motorRF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorLF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorLB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorRB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         waitForStart();
 
         while (opModeIsActive())
@@ -46,9 +50,9 @@ public class MecanumDrive extends LinearOpMode
             }
             */
 
-            motorRF.setPower((-gamepad1.left_stick_y - gamepad1.left_stick_x) + gamepad1.right_stick_x);
+            motorRF.setPower((-gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x);
             motorLB.setPower(-(-gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x);
-            motorRB.setPower(-(-gamepad1.left_stick_x + gamepad1.left_stick_y) + gamepad1.right_stick_x);
+            motorRB.setPower(-(-gamepad1.left_stick_x + gamepad1.left_stick_y) - gamepad1.right_stick_x);
             motorLF.setPower((-gamepad1.left_stick_x + gamepad1.left_stick_y) - gamepad1.right_stick_x);
 
             telemetry.addData("Left Joystick X", gamepad1.left_stick_x);
