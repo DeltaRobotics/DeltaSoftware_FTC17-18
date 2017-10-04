@@ -13,6 +13,11 @@ public class MecanumDrive extends LinearOpMode
 {
     RobotHardware robot = new RobotHardware();
 
+    boolean bState = false;
+    boolean xState = false;
+    boolean yState = false;
+    boolean aState = false;
+
     public void runOpMode()
     {
         robot.init(hardwareMap);
@@ -21,6 +26,10 @@ public class MecanumDrive extends LinearOpMode
         robot.motorLF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.motorLB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.motorRB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        robot.armBase.setPosition(1.0);
+        robot.arm.setPosition(0.35);
+
         waitForStart();
 
         while (opModeIsActive())
@@ -49,6 +58,56 @@ public class MecanumDrive extends LinearOpMode
             robot.motorLB.setPower(-(-gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x);
             robot.motorRB.setPower(-(-gamepad1.left_stick_x + gamepad1.left_stick_y) - gamepad1.right_stick_x);
             robot.motorLF.setPower((-gamepad1.left_stick_x + gamepad1.left_stick_y) - gamepad1.right_stick_x);
+
+            if(gamepad1.y && !yState)
+            {
+                yState = true;
+                robot.arm.setPosition(robot.arm.getPosition() + 0.05);
+            }
+            else if(!gamepad1.y)
+            {
+                yState = false;
+            }
+
+            if(gamepad1.a && !aState)
+            {
+                aState = true;
+                robot.arm.setPosition(robot.arm.getPosition() - 0.05);
+            }
+            else if(!gamepad1.a)
+            {
+                aState = false;
+            }
+
+            if(gamepad1.x && !xState)
+            {
+                xState = true;
+                if(robot.armBase.getPosition() >= 0.60 || robot.arm.getPosition() == 1)
+                {
+                    robot.armBase.setPosition(robot.armBase.getPosition() - 0.05);
+                }
+
+            }
+            else if(!gamepad1.x)
+            {
+                xState = false;
+            }
+
+            if(gamepad1.b && !bState)
+            {
+                bState = true;
+                if(robot.armBase.getPosition() >= 0.55 || robot.arm.getPosition() == 1)
+                {
+                    robot.armBase.setPosition(robot.armBase.getPosition() + 0.05);
+                }
+            }
+            else if(!gamepad1.b)
+            {
+                bState = false;
+            }
+
+            telemetry.addData("armPos", robot.arm.getPosition());
+            telemetry.addData("armBasePos", robot.armBase.getPosition());
 
             telemetry.addData("Left Joystick X", gamepad1.left_stick_x);
             telemetry.addData("Left Joystick Y", gamepad1.left_stick_y);
