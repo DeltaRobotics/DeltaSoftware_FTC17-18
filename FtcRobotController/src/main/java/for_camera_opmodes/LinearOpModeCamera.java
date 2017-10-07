@@ -1,19 +1,30 @@
 package for_camera_opmodes;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
+import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * TeleOp Mode
@@ -41,7 +52,7 @@ public class LinearOpModeCamera extends LinearOpMode {
 
     }
 
-    /*public Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
+    public Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
         public void onPreviewFrame(byte[] data, Camera camera) {
             try {
                 Camera.Parameters parameters = camera.getParameters();
@@ -54,7 +65,7 @@ public class LinearOpModeCamera extends LinearOpMode {
 
             }
         }
-    };*/
+    };
 
     public void setCameraDownsampling(int downSampling) {
         ds = downSampling;
@@ -110,7 +121,7 @@ public class LinearOpModeCamera extends LinearOpMode {
     public void startCamera() {
 
         camera = openCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
-        /*camera.setPreviewCallback(previewCallback);
+        camera.setPreviewCallback(previewCallback);
 
         Camera.Parameters parameters = camera.getParameters();
 
@@ -124,7 +135,7 @@ public class LinearOpModeCamera extends LinearOpMode {
 
         if (preview == null) {
            ((FtcRobotControllerActivity) hardwareMap.appContext).initPreviewLinear(camera, this, previewCallback);
-        }*/
+        }
     }
 
     public void stopCameraInSecs(int duration) {
@@ -197,6 +208,86 @@ public class LinearOpModeCamera extends LinearOpMode {
     // returns ROTATED image, to match preview window
     static public Bitmap convertYuvImageToRgb(YuvImage yuvImage, int width, int height, int downSample) {
         return OpModeCamera.convertYuvImageToRgb(yuvImage, width, height, downSample);
+    }
+
+    public int normalizePixels(int value) {
+        value /= 100000;
+        return value;
+    }
+
+    public void SaveImage(Bitmap finalBitmap) {
+
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root);
+        myDir.mkdirs();
+        SimpleDateFormat s = new SimpleDateFormat("dd MM yyyy hhmmss");
+        String format = s.format(new Date());
+        String fname = format +".jpg";
+        File file = new File (myDir, fname);
+        if (file.exists ()) file.delete ();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void takeScreenshot()
+    {
+
+    }
+
+    public void SaveRGB (Bitmap colorBitmap)
+    {
+        String pixelColorMap = "";
+        String rtemp;
+        String gtemp;
+        String btemp;
+        String xv;
+        String yv;
+        int pixelPlaceholder;
+        int Rtemp;
+        int Gtemp;
+        int Btemp;
+        for(int y = 0; y < 640; y++)
+        {
+            for(int x = 0; x < 480; x++)
+            {
+                pixelPlaceholder = colorBitmap.getPixel(x,y);
+                xv = Integer.toString(x);
+                yv = Integer.toString(y);
+                Rtemp = red(pixelPlaceholder);
+                rtemp = Integer.toString(Rtemp);
+                Gtemp = green(pixelPlaceholder);
+                gtemp = Integer.toString(Gtemp);
+                Btemp = blue(pixelPlaceholder);
+                btemp = Integer.toString(Btemp);
+
+                pixelColorMap = pixelColorMap + x + "," + y + " - ";
+                pixelColorMap = pixelColorMap + rtemp + ",";
+                pixelColorMap = pixelColorMap + gtemp + ",";
+                pixelColorMap = pixelColorMap + btemp + System.getProperty("line.separator");
+            }
+        }
+    /*String root = Environment.getExternalStorageDirectory().toString();
+    File myDir = new File(root);
+    myDir.mkdirs();
+    SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+    String format = s.format(new Date());
+    String fname = format +".jpg";
+    File file = new File (myDir, fname);
+    if (file.exists ()) file.delete ();
+    try {
+      PrintStream out = new PrintStream(new FileOutputStream("filename.txt")))
+      {
+        out.print(pixelColorMap);}
+    } catch (Exception e) {
+      e.printStackTrace();
+    }*/
     }
 
 }

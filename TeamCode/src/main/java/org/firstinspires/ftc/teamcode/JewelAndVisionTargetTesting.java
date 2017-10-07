@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
@@ -17,6 +18,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Environment;
+import android.view.View;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import for_camera_opmodes.LinearOpModeCamera;
 import for_camera_opmodes.OpModeCamera;
@@ -31,7 +41,7 @@ import static com.sun.tools.javac.util.Constants.format;
 public class JewelAndVisionTargetTesting extends LinearOpModeCamera
 {
 
-    int jewelColor;
+    int jewelColorInt;
 
 
     OpenGLMatrix lastLocation = null;
@@ -40,6 +50,7 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
 
     public void runOpMode()
     {
+       /*
         //Both camera methods utilize the monitor of the Robot Controller Phone. In order to see the color of the jewel, we are not sending the vuforia data below.
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -61,41 +72,42 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
+        */
 
         //Resolution of image, currently set to 2 (higher number means less resolution but faster speed)
-        setCameraDownsampling(2);
+        setCameraDownsampling(1);
         //Takes some time, is initializing all of the camera's internal workings
         startCamera();
         //Stays Initialized, waits for the Driver's Station Button to be pressed
         waitForStart();
 
         //Activates Vuforia to begin searching for the Relic VuMark images
-        relicTrackables.activate();
+        //relicTrackables.activate();
 
         while (opModeIsActive())
         {
             telemetry.addData("Active", "OpMode");
             //if (isCameraAvailable())
             //{
-                telemetry.addData("Relic", "Analysis");
+                /*telemetry.addData("Relic", "Analysis");
                 //RELIC ANALYSIS
                 RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                 if (vuMark != RelicRecoveryVuMark.UNKNOWN)
                 {
 
-                /* Found an instance of the template. In the actual game, you will probably
-                 * loop until this condition occurs, then move on to act accordingly depending
-                 * on which VuMark was visible. */
+                //Found an instance of the template. In the actual game, you will probably
+                 //loop until this condition occurs, then move on to act accordingly depending
+                 // on which VuMark was visible.
                     telemetry.addData("VuMark", "%s visible", vuMark);
 
-                /* For fun, we also exhibit the navigational pose. In the Relic Recovery game,
-                 * it is perhaps unlikely that you will actually need to act on this pose information, but
-                 * we illustrate it nevertheless, for completeness. */
+                 //For fun, we also exhibit the navigational pose. In the Relic Recovery game,
+                 //it is perhaps unlikely that you will actually need to act on this pose information, but
+                 //we illustrate it nevertheless, for completeness.
                     OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) relicTemplate.getListener()).getPose();
                     telemetry.addData("Pose", format(pose));
 
-                /* We further illustrate how to decompose the pose into useful rotational and
-                 * translational components */
+                //We further illustrate how to decompose the pose into useful rotational and
+                 //translational components
                     if (pose != null)
                     {
                         VectorF trans = pose.getTranslation();
@@ -117,39 +129,94 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
                 }
                 telemetry.update();
 
-                if (imageReady())
+            */
+
+            if (imageReady())
+            {
+
+                //telemetry.addData("Width", width);
+                //telemetry.addData("Height", height);
+
+                int redValueLeft = -76800;
+                int blueValueLeft = -76800;
+                int greenValueLeft = -76800;
+
+                Bitmap rgbImage;
+                //The last value must correspond to the downsampling value from above
+                rgbImage = convertYuvImageToRgb(yuvImage, width, height, 1);
+
+                for (int x = 480; x < 960; x++)
                 {
-                    int redValueLeft = -76800;
-                    int blueValueLeft = -76800;
-                    int greenValueLeft = -76800;
-
-                    Bitmap rgbImage;
-                    //The last value must correspond to the downsampling value from above
-                    rgbImage = convertYuvImageToRgb(yuvImage, width, height, 2);
-
-                    //Analyzing Jewel Color
-                    for (int x = 240; x < 480; x++)
+                    for (int y = 850; y < 1280; y++)
                     {
-                        for (int y = 400; y < 640; y++)
+                        if (x == 0 && y >= 850)
                         {
-                            int pixel = rgbImage.getPixel(x, y);
-                            redValueLeft += red(pixel);
-                            blueValueLeft += blue(pixel);
-                            greenValueLeft += green(pixel);
+                            rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
+                        }
+                        if (x >= 0 && y == 850)
+                        {
+                            rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
+                        }
+                        if (x == 480 && y >= 850)
+                        {
+                            rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
+                        }
+                        if (x >= 480 && y == 1280)
+                        {
+                            rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
                         }
                     }
-
-                    jewelColor = highestColor(redValueLeft, blueValueLeft, greenValueLeft);
                 }
-                telemetry.addData("Jewel Color", jewelColor);
+
+                SaveImage(rgbImage);
+
+                //Analyzing Jewel Color
+                for (int x = 480; x < 960; x++)
+                {
+                    for (int y = 850; y < 1280; y++)
+                    {
+                        int pixel = rgbImage.getPixel(x, y);
+                        redValueLeft += red(pixel);
+                        blueValueLeft += blue(pixel);
+                        greenValueLeft += green(pixel);
+                    }
+                }
+                redValueLeft = normalizePixels(redValueLeft);
+                blueValueLeft = normalizePixels(blueValueLeft);
+                greenValueLeft = normalizePixels(greenValueLeft);
+                telemetry.addData("redValueLeft", redValueLeft);
+                telemetry.addData("blueValueLeft", blueValueLeft);
+                telemetry.addData("greenValueLeft", greenValueLeft);
+
+                jewelColorInt = highestColor(redValueLeft, blueValueLeft, greenValueLeft);
+
+                telemetry.addData("Jewel Color", jewelColorInt);
+                if (jewelColorInt == 0)
+                {
+                    telemetry.addData("Jewel Color", "Red");
+                } else if (jewelColorInt == 1)
+                {
+                    telemetry.addData("Jewel Color", "Blue");
+                } else if (jewelColorInt == 2)
+                {
+                    telemetry.addData("Jewel Color", "Green? What Did You Do?");
+                } else
+                {
+                    telemetry.addData("Jewel Color", "Something's Wrong");
+                }
                 telemetry.update();
-
-
             }
-            telemetry.addData("Not available?", "??");
+
+
         }
+        stopCamera();
+        telemetry.addData("Not available?", "??");
+
+    }
+
     //}
-        String format (OpenGLMatrix transformationMatrix){
+    String format(OpenGLMatrix transformationMatrix)
+    {
         return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
     }
