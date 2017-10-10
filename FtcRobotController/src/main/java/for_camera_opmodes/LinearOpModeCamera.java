@@ -239,6 +239,7 @@ public class LinearOpModeCamera extends LinearOpMode {
     public void takeScreenshot()
     {
 
+
     }
 
     public void SaveRGB (Bitmap colorBitmap)
