@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class AutoTesting extends LinearOpMode
 {
     RobotHardware robot = new RobotHardware();
+    Drive drive = new Drive();
 
     @Override
     public void runOpMode()
@@ -42,7 +43,7 @@ public class AutoTesting extends LinearOpMode
             */
 
 
-            robot.motorRF.setPower(-0.5);
+            /*robot.motorRF.setPower(-0.5);
             robot.motorLF.setPower(0.5);
             robot.motorRB.setPower(-0.5);
             robot.motorLB.setPower(0.5);
@@ -143,6 +144,147 @@ public class AutoTesting extends LinearOpMode
             telemetry.addData("motorRB Pos", robot.motorRB.getCurrentPosition());
             telemetry.addData("motorLB Pos", robot.motorLB.getCurrentPosition());
         }
+        */
+
+        robot.motorRF.setPower(drive.setPower(0, -0.5, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, -0.5, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, -0.5, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, -0.5, 0)[3]);
+
+        sleep(30000);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, 0)[3]);
+
+        /*sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0.5, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0.5, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0.5, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0.5, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(-0.5, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(-0.5, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(-0.5, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(-0.5, 0, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0.5, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0.5, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0.5, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0.5, 0, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(-0.5, -0.5, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(-0.5, -0.5, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(-0.5, -0.5, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(-0.5, -0.5, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0.5, 0.5, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0.5, 0.5, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0.5, 0.5, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0.5, 0.5, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0.5, -0.5, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0.5, -0.5, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0.5, -0.5, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0.5, -0.5, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(-0.5, 0.5, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(-0.5, 0.5, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(-0.5, 0.5, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(-0.5, 0.5, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, 0.5)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, 0.5)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, 0.5)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, 0.5)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, 0)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, -0.5)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, -0.5)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, -0.5)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, -0.5)[3]);
+
+        sleep(500);
+
+        robot.motorRF.setPower(drive.setPower(0, 0, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, 0, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, 0, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, 0, 0)[3]);
+
+        sleep(500);
         */
 
 

@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class MecanumDrive extends LinearOpMode
 {
     RobotHardware robot = new RobotHardware();
+    Drive drive = new Drive();
 
     boolean bState = false;
     boolean xState = false;
@@ -35,8 +36,8 @@ public class MecanumDrive extends LinearOpMode
         while (opModeIsActive())
         {
 
-            /*
-            if (gamepad1.right_stick_x == 0)
+
+            /*if (gamepad1.right_stick_x == 0)
             {
                 motorRF.setPower((-gamepad1.left_stick_y - gamepad1.left_stick_x));
                 motorLB.setPower(-(-gamepad1.left_stick_y - gamepad1.left_stick_x));
@@ -54,10 +55,15 @@ public class MecanumDrive extends LinearOpMode
             }
             */
 
+
             robot.motorRF.setPower((-gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x);
             robot.motorLB.setPower(-(-gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x);
             robot.motorRB.setPower(-(-gamepad1.left_stick_x + gamepad1.left_stick_y) - gamepad1.right_stick_x);
             robot.motorLF.setPower((-gamepad1.left_stick_x + gamepad1.left_stick_y) - gamepad1.right_stick_x);
+
+
+
+
 
             if(gamepad1.y && !yState)
             {
@@ -120,6 +126,7 @@ public class MecanumDrive extends LinearOpMode
             telemetry.update();
 
             //Comment
+
 
         }
     }
