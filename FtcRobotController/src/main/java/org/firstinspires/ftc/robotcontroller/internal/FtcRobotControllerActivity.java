@@ -40,11 +40,13 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -96,6 +98,7 @@ import com.qualcomm.robotcore.wifi.WifiDirectAssistant;
 import org.firstinspires.ftc.ftccommon.external.SoundPlayingRobotMonitor;
 import org.firstinspires.ftc.ftccommon.internal.FtcRobotControllerWatchdogService;
 import org.firstinspires.ftc.ftccommon.internal.ProgramAndManageActivity;
+import org.firstinspires.ftc.robotcore.internal.android.dx.cf.code.Frame;
 import org.firstinspires.ftc.robotcore.internal.hardware.DragonboardLynxDragonboardIsPresentPin;
 import org.firstinspires.ftc.robotcore.internal.network.DeviceNameManager;
 import org.firstinspires.ftc.robotcore.internal.network.PreferenceRemoterRC;
@@ -111,6 +114,8 @@ import org.firstinspires.ftc.robotcore.internal.webserver.RobotControllerWebInfo
 import org.firstinspires.ftc.robotcore.internal.webserver.WebServer;
 import org.firstinspires.inspection.RcInspectionActivity;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -121,6 +126,7 @@ import for_camera_opmodes.OpModeCamera;
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity
   {
+
   public static final String TAG = "RCActivity";
   public String getTag() { return TAG; }
 
@@ -183,6 +189,7 @@ public class FtcRobotControllerActivity extends Activity
       });
     }
 
+    public FrameLayout screenshotLayout;
 
     public void removePreview(final OpModeCamera context) {
       runOnUiThread(new Runnable() {
@@ -204,7 +211,20 @@ public class FtcRobotControllerActivity extends Activity
       });
     }
 
+    public Bitmap captureScreenshot() {
+        // image saving sd card path
+        String mPath = Environment.getExternalStorageDirectory().toString() + "/" + System.currentTimeMillis() + ".jpg";
 
+        // create bitmap screen capture
+        View view = getWindow().getDecorView().getRootView();
+        view.setDrawingCacheEnabled(true);
+
+        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+        view.setDrawingCacheEnabled(false);
+
+      return bitmap;
+
+      }
 
     protected class RobotRestarter implements Restarter {
 
