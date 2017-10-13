@@ -12,6 +12,7 @@ import android.hardware.Camera;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -51,6 +52,7 @@ public class LinearOpModeCamera extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
     }
+
 
     public Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
         public void onPreviewFrame(byte[] data, Camera camera) {
@@ -236,10 +238,13 @@ public class LinearOpModeCamera extends LinearOpMode {
         }
     }
 
-    public void takeScreenshot()
-    {
+    public Bitmap screenShot(View view) {
 
-
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),
+                view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
     }
 
     public void SaveRGB (Bitmap colorBitmap)

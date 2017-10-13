@@ -43,6 +43,8 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
 
     int jewelColorInt;
 
+    public View screenshot;
+
 
     OpenGLMatrix lastLocation = null;
     //Initializing Vuforia Analysis
@@ -50,7 +52,7 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
 
     public void runOpMode()
     {
-       /*
+
         //Both camera methods utilize the monitor of the Robot Controller Phone. In order to see the color of the jewel, we are not sending the vuforia data below.
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -72,24 +74,24 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
-        */
+
 
         //Resolution of image, currently set to 2 (higher number means less resolution but faster speed)
-        setCameraDownsampling(1);
+        //setCameraDownsampling(1);
         //Takes some time, is initializing all of the camera's internal workings
-        startCamera();
+        //startCamera();
         //Stays Initialized, waits for the Driver's Station Button to be pressed
         waitForStart();
 
         //Activates Vuforia to begin searching for the Relic VuMark images
-        //relicTrackables.activate();
+        relicTrackables.activate();
 
         while (opModeIsActive())
         {
             telemetry.addData("Active", "OpMode");
             //if (isCameraAvailable())
             //{
-                /*telemetry.addData("Relic", "Analysis");
+                telemetry.addData("Relic", "Analysis");
                 //RELIC ANALYSIS
                 RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                 if (vuMark != RelicRecoveryVuMark.UNKNOWN)
@@ -129,10 +131,10 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
                 }
                 telemetry.update();
 
-            */
 
-            if (imageReady())
-            {
+
+            //if (imageReady())
+            //{
 
                 //telemetry.addData("Width", width);
                 //telemetry.addData("Height", height);
@@ -143,9 +145,14 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
 
                 Bitmap rgbImage;
                 //The last value must correspond to the downsampling value from above
-                rgbImage = convertYuvImageToRgb(yuvImage, width, height, 1);
+                rgbImage = ((FtcRobotControllerActivity) hardwareMap.appContext).captureScreenshot();
 
-                for (int x = 480; x < 960; x++)
+                telemetry.addData("Width", rgbImage.getWidth());
+                telemetry.addData("Height", rgbImage.getHeight());
+            telemetry.update();
+
+
+                /*for (int x = 480; x < 960; x++)
                 {
                     for (int y = 850; y < 1280; y++)
                     {
@@ -187,6 +194,7 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
                 telemetry.addData("redValueLeft", redValueLeft);
                 telemetry.addData("blueValueLeft", blueValueLeft);
                 telemetry.addData("greenValueLeft", greenValueLeft);
+                */
 
                 jewelColorInt = highestColor(redValueLeft, blueValueLeft, greenValueLeft);
 
@@ -208,7 +216,7 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
             }
 
 
-        }
+        //}
         stopCamera();
         telemetry.addData("Not available?", "??");
 
