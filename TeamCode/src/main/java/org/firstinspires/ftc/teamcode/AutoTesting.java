@@ -295,9 +295,26 @@ public class AutoTesting extends LinearOpMode
         motors[3] = robot.motorLF;
 
 
-        drive.timeDrive(5000, 0.5, driveStyle.FORWARD, motors);
+        drive.timeDrive(1000, 0.5, driveStyle.FORWARD, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.BACKWARD, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.STRAFE_LEFT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.STRAFE_RIGHT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.FORWARD_LEFT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.BACKWARD_RIGHT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.FORWARD_RIGHT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.BACKWARD_LEFT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.PIVOT_LEFT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.PIVOT_RIGHT, motors);
 
-        //
 
 
     }

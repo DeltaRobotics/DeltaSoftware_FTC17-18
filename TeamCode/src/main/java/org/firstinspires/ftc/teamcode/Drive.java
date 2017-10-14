@@ -76,42 +76,135 @@ public class Drive extends LinearOpMode
 
             case STRAFE_LEFT:
             {
+                motors[0].setPower(setPower(-motorPower, 0, 0)[0]);
+                motors[1].setPower(setPower(-motorPower, 0, 0)[1]);
+                motors[2].setPower(setPower(-motorPower, 0, 0)[2]);
+                motors[3].setPower(setPower(-motorPower, 0, 0)[3]);
 
+                sleep(time);
+
+                motors[0].setPower(setPower(0, 0, 0)[0]);
+                motors[1].setPower(setPower(0, 0, 0)[1]);
+                motors[2].setPower(setPower(0, 0, 0)[2]);
+                motors[3].setPower(setPower(0, 0, 0)[3]);
+
+                break;
             }
 
             case STRAFE_RIGHT:
             {
+                motors[0].setPower(setPower(motorPower, 0, 0)[0]);
+                motors[1].setPower(setPower(motorPower, 0, 0)[1]);
+                motors[2].setPower(setPower(motorPower, 0, 0)[2]);
+                motors[3].setPower(setPower(motorPower, 0, 0)[3]);
 
+                sleep(time);
+
+                motors[0].setPower(setPower(0, 0, 0)[0]);
+                motors[1].setPower(setPower(0, 0, 0)[1]);
+                motors[2].setPower(setPower(0, 0, 0)[2]);
+                motors[3].setPower(setPower(0, 0, 0)[3]);
+                break;
             }
 
             case FORWARD_LEFT:
             {
+                motors[0].setPower(setPower(-motorPower, -motorPower, 0)[0]);
+                motors[1].setPower(setPower(-motorPower, -motorPower, 0)[1]);
+                motors[2].setPower(setPower(-motorPower, -motorPower, 0)[2]);
+                motors[3].setPower(setPower(-motorPower, -motorPower, 0)[3]);
 
+                sleep(time);
+
+                motors[0].setPower(setPower(0, 0, 0)[0]);
+                motors[1].setPower(setPower(0, 0, 0)[1]);
+                motors[2].setPower(setPower(0, 0, 0)[2]);
+                motors[3].setPower(setPower(0, 0, 0)[3]);
+                break;
             }
 
             case FORWARD_RIGHT:
             {
-//
+                motors[0].setPower(setPower(motorPower, -motorPower, 0)[0]);
+                motors[1].setPower(setPower(motorPower, -motorPower, 0)[1]);
+                motors[2].setPower(setPower(motorPower, -motorPower, 0)[2]);
+                motors[3].setPower(setPower(motorPower, -motorPower, 0)[3]);
+
+                sleep(time);
+
+                motors[0].setPower(setPower(0, 0, 0)[0]);
+                motors[1].setPower(setPower(0, 0, 0)[1]);
+                motors[2].setPower(setPower(0, 0, 0)[2]);
+                motors[3].setPower(setPower(0, 0, 0)[3]);
+                break;
             }
 
             case BACKWARD_LEFT:
             {
+                motors[0].setPower(setPower(-motorPower, motorPower, 0)[0]);
+                motors[1].setPower(setPower(-motorPower, motorPower, 0)[1]);
+                motors[2].setPower(setPower(-motorPower, motorPower, 0)[2]);
+                motors[3].setPower(setPower(-motorPower, motorPower, 0)[3]);
 
+                sleep(time);
+
+                motors[0].setPower(setPower(0, 0, 0)[0]);
+                motors[1].setPower(setPower(0, 0, 0)[1]);
+                motors[2].setPower(setPower(0, 0, 0)[2]);
+                motors[3].setPower(setPower(0, 0, 0)[3]);
+                break;
             }
 
             case BACKWARD_RIGHT:
             {
+                motors[0].setPower(setPower(motorPower, motorPower, 0)[0]);
+                motors[1].setPower(setPower(motorPower, motorPower, 0)[1]);
+                motors[2].setPower(setPower(motorPower, motorPower, 0)[2]);
+                motors[3].setPower(setPower(motorPower, motorPower, 0)[3]);
 
+                sleep(time);
+
+                motors[0].setPower(setPower(0, 0, 0)[0]);
+                motors[1].setPower(setPower(0, 0, 0)[1]);
+                motors[2].setPower(setPower(0, 0, 0)[2]);
+                motors[3].setPower(setPower(0, 0, 0)[3]);
+                break;
             }
 
             case PIVOT_LEFT:
             {
+                motors[0].setPower(setPower(0, 0, -motorPower)[0]);
+                motors[1].setPower(setPower(0, 0, -motorPower)[1]);
+                motors[2].setPower(setPower(0, 0, -motorPower)[2]);
+                motors[3].setPower(setPower(0, 0, -motorPower)[3]);
 
+
+
+                sleep(time);
+
+                motors[0].setPower(setPower(0, 0, 0)[0]);
+                motors[1].setPower(setPower(0, 0, 0)[1]);
+                motors[2].setPower(setPower(0, 0, 0)[2]);
+                motors[3].setPower(setPower(0, 0, 0)[3]);
+                break;
             }
 
             case PIVOT_RIGHT:
             {
+                motors[0].setPower(setPower(0, 0, motorPower)[0]);
+                motors[1].setPower(setPower(0, 0, motorPower)[1]);
+                motors[2].setPower(setPower(0, 0, motorPower)[2]);
+                motors[3].setPower(setPower(0, 0, motorPower)[3]);
 
+
+
+                sleep(time);
+
+                motors[0].setPower(setPower(0, 0, 0)[0]);
+                motors[1].setPower(setPower(0, 0, 0)[1]);
+                motors[2].setPower(setPower(0, 0, 0)[2]);
+                motors[3].setPower(setPower(0, 0, 0)[3]);
+                break;
             }
         }
 
