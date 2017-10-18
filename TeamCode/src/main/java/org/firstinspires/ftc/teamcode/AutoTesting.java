@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import org.firstinspires.ftc.teamcode.driveStyle;
 
 /**
  * Created by User on 9/26/2017.
@@ -144,8 +145,8 @@ public class AutoTesting extends LinearOpMode
             telemetry.addData("motorRB Pos", robot.motorRB.getCurrentPosition());
             telemetry.addData("motorLB Pos", robot.motorLB.getCurrentPosition());
         }
-        */
 
+/*
         robot.motorRF.setPower(drive.setPower(0, -0.5, 0)[0]);
         robot.motorRB.setPower(drive.setPower(0, -0.5, 0)[1]);
         robot.motorLB.setPower(drive.setPower(0, -0.5, 0)[2]);
@@ -286,6 +287,34 @@ public class AutoTesting extends LinearOpMode
 
         sleep(500);
         */
+
+        DcMotor[] motors = new DcMotor[4];
+        motors[0] = robot.motorRF;
+        motors[1] = robot.motorRB;
+        motors[2] = robot.motorLB;
+        motors[3] = robot.motorLF;
+
+
+        drive.timeDrive(1000, 0.5, driveStyle.FORWARD, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.BACKWARD, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.STRAFE_LEFT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.STRAFE_RIGHT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.FORWARD_LEFT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.BACKWARD_RIGHT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.FORWARD_RIGHT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.BACKWARD_LEFT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.PIVOT_LEFT, motors);
+        sleep(500);
+        drive.timeDrive(1000, 0.5, driveStyle.PIVOT_RIGHT, motors);
+
 
 
     }
