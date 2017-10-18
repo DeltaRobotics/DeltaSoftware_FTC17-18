@@ -152,23 +152,23 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
             telemetry.update();
 
 
-                /*for (int x = 480; x < 960; x++)
+            for (int x = 240; x < 480; x++)
                 {
-                    for (int y = 850; y < 1280; y++)
+                    for (int y = 568; y < 854; y++)
                     {
-                        if (x == 0 && y >= 850)
+                        if (x == 0 && y >= 568)
                         {
                             rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
                         }
-                        if (x >= 0 && y == 850)
+                        if (x >= 0 && y == 568)
                         {
                             rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
                         }
-                        if (x == 480 && y >= 850)
+                        if (x == 240 && y >= 568)
                         {
                             rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
                         }
-                        if (x >= 480 && y == 1280)
+                        if (x >= 240 && y == 854)
                         {
                             rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
                         }
@@ -178,9 +178,9 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
                 SaveImage(rgbImage);
 
                 //Analyzing Jewel Color
-                for (int x = 480; x < 960; x++)
+                for (int x = 240; x < 480; x++)
                 {
-                    for (int y = 850; y < 1280; y++)
+                    for (int y = 568; y < 854; y++)
                     {
                         int pixel = rgbImage.getPixel(x, y);
                         redValueLeft += red(pixel);
@@ -194,7 +194,7 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
                 telemetry.addData("redValueLeft", redValueLeft);
                 telemetry.addData("blueValueLeft", blueValueLeft);
                 telemetry.addData("greenValueLeft", greenValueLeft);
-                */
+
 
                 jewelColorInt = highestColor(redValueLeft, blueValueLeft, greenValueLeft);
 
