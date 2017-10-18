@@ -24,6 +24,7 @@ public class Drive extends LinearOpMode
         motorPowers[1] = -(-dirX + dirY) - pivot;
         motorPowers[2] = -(-dirY - dirX) - pivot;
         motorPowers[3] = (-dirX + dirY) - pivot;
+        //
 
         //motorPowers[0] = motorRF
         //motorPowers[1] = motorRB

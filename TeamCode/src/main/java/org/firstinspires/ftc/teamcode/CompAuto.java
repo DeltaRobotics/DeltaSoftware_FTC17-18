@@ -36,6 +36,8 @@ public class CompAuto extends LinearOpMode
         drive.timeDrive(820, 0.5, driveStyle.FORWARD, motors);
         sleep(1000);
         drive.timeDrive(700, 0.5, driveStyle.STRAFE_RIGHT, motors);
+
+        //
     }
 
 }
