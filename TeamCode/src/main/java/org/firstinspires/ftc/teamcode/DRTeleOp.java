@@ -13,17 +13,6 @@ public class DRTeleOp extends LinearOpMode
 {
     RobotHardware curiosity = new RobotHardware();
 
-    Servo slapper;
-    Servo flapper;
-
-    DcMotor joint1;
-    Servo joint2;
-    Servo joint3;
-
-    Servo wrist;
-    Servo knock;
-    Servo claw;
-
 
     double slapperInit = 0.0;
     double slapperPosition = 0.0;
@@ -35,14 +24,15 @@ public class DRTeleOp extends LinearOpMode
     {
         curiosity.init(hardwareMap);
 
+
         //Sets the end behavior of the motors - brake implies the robot will physically attempt to stop instead of just coasting
         curiosity.motorRF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         curiosity.motorLF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         curiosity.motorLB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         curiosity.motorRB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        slapper.setPosition(slapperInit);
-        flapper.setPosition(flapperInit);
+        curiosity.slapper.setPosition(slapperInit);
+        curiosity.flapper.setPosition(flapperInit);
 
         waitForStart();
 
@@ -78,8 +68,8 @@ public class DRTeleOp extends LinearOpMode
             }
 
             //Actually setting the positions of the servos
-            slapper.setPosition(slapperPosition);
-            flapper.setPosition(flapperPosition);
+            curiosity.slapper.setPosition(slapperPosition);
+            curiosity.flapper.setPosition(flapperPosition);
 
         }
 
