@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.util.Range;
  * Created by User on 10/17/2017.
  */
 
+@TeleOp(name = "DRTeleOp", group = "")
 public class DRTeleOp extends LinearOpMode
 {
     RobotHardware curiosity = new RobotHardware();
@@ -19,14 +21,17 @@ public class DRTeleOp extends LinearOpMode
     double flapperInit = 1.0;
     double flapperPosition = 0.0;
 
-    double armServoAdjustment = 0.0;
-    double joint1MaxSpeed = 0.40;
+    double armServoAdjustment = 0.2;
+    double joint1MaxSpeed = 0.35;
 
     double joint2Position = 0.0;
     double joint3Position = 0.0;
 
     long initTime;
-    long changeTime = 500;
+    long changeTime = 1200;
+
+    boolean dPadUpState = false;
+    boolean dPadDownState = false;
 
 
     public void runOpMode()
@@ -38,6 +43,7 @@ public class DRTeleOp extends LinearOpMode
         curiosity.motorLF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         curiosity.motorLB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         curiosity.motorRB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        curiosity.joint1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         curiosity.slapper.setPosition(slapperInit);
         curiosity.flapper.setPosition(flapperInit);
@@ -45,8 +51,9 @@ public class DRTeleOp extends LinearOpMode
         initTime = System.currentTimeMillis();
         while((System.currentTimeMillis() - initTime) < changeTime)
         {
-            curiosity.joint2.setPosition(0.6);
+            curiosity.joint2.setPosition(0.35);
         }
+        curiosity.joint2.setPosition(0.5); //stops servo from turning
 
         waitForStart();
 
@@ -55,7 +62,7 @@ public class DRTeleOp extends LinearOpMode
             //Clipping the ranges of servos so they don't go out of bounds
             slapperPosition = Range.clip(slapperPosition, 0.05, 0.95);
             flapperPosition = Range.clip(flapperPosition, 0.05, 0.95);
-            armServoAdjustment = Range.clip(armServoAdjustment, 0.02, 0.48);
+            armServoAdjustment = Range.clip(armServoAdjustment, 0.2, 0.7);
 
 
             //Setting drive motors for mecanum - gamepad 1 - driver
@@ -86,26 +93,37 @@ public class DRTeleOp extends LinearOpMode
             //Manipulator - Arm controls, Joints 1 and 2
 
             //Setting Arm Adjustment Speed
-            if(gamepad2.dpad_up)
+            if(gamepad2.dpad_up && !dPadUpState)
             {
+                dPadUpState = true;
                 armServoAdjustment += 0.02;
             }
-            else if(gamepad2.dpad_down)
+            else if(!gamepad2.dpad_up)
             {
+                dPadUpState = false;
+            }
+
+            if(gamepad2.dpad_down && !dPadDownState)
+            {
+                dPadDownState  = true;
                 armServoAdjustment -= 0.02;
+            }
+            else if(!gamepad2.dpad_down)
+            {
+                dPadDownState = false;
             }
 
             //Setting Joint 1
-            curiosity.joint1.setPower(gamepad2.left_stick_y * joint1MaxSpeed);
+            curiosity.joint1.setPower(-(gamepad2.left_stick_y * joint1MaxSpeed));
 
             //Setting Joint 2
             if(gamepad2.left_bumper)
             {
-                joint2Position = (0.5 + armServoAdjustment);
+                joint2Position = (0.5 - armServoAdjustment);
             }
             else if(gamepad2.left_trigger > 0.4)
             {
-                joint2Position = (0.5 - armServoAdjustment);
+                joint2Position = (0.5 + armServoAdjustment);
             }
             else
             {

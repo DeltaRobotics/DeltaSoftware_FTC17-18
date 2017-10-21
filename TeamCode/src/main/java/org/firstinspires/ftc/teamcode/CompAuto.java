@@ -14,9 +14,15 @@ public class CompAuto extends LinearOpMode
     RobotHardware robot = new RobotHardware();
     Drive drive = new Drive();
 
+    public DcMotor motorRF = null;
+    public DcMotor motorLF = null;
+    public DcMotor motorRB = null;
+    public DcMotor motorLB = null;
+
     @Override
     public void runOpMode()
     {
+
         robot.init(hardwareMap);
 
         robot.motorRF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
