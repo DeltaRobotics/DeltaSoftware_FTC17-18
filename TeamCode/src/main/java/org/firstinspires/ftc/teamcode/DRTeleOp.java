@@ -20,6 +20,15 @@ public class DRTeleOp extends LinearOpMode
     double slapperPosition = 0.0;
     double flapperInit = 1.0;
     double flapperPosition = 0.0;
+    double wristInit = 0.795;
+    double knockInit = 0.75;
+    double clawInit = 0.646;
+    double wristMaxChange = 0.005;
+    double knockMaxChange = 0.005;
+    double clawMaxChange = 0.005;
+    double wristPos = wristInit;
+    double knockPos = knockInit;
+    double clawPos = clawInit;
 
     double armServoAdjustment = 0.2;
     double joint1MaxSpeed = 0.35;
@@ -47,6 +56,9 @@ public class DRTeleOp extends LinearOpMode
 
         curiosity.slapper.setPosition(slapperInit);
         curiosity.flapper.setPosition(flapperInit);
+        curiosity.wrist.setPosition(wristInit);
+        curiosity.knock.setPosition(knockInit);
+        curiosity.claw.setPosition(clawInit);
 
         initTime = System.currentTimeMillis();
         while((System.currentTimeMillis() - initTime) < changeTime)
@@ -130,10 +142,71 @@ public class DRTeleOp extends LinearOpMode
                 joint2Position = 0.5;
             }
 
+            if(gamepad2.right_stick_x > 0.1 || gamepad2.right_stick_x < -0.1)
+            {
+                wristPos += (gamepad2.right_stick_x * wristMaxChange);
+                if(wristPos > 1.0)
+                {
+                    wristPos = 1.0;
+                }
+
+                if(wristPos < 0.0)
+                {
+                    wristPos = 0.0;
+                }
+
+                curiosity.wrist.setPosition(wristPos);
+
+            }
+
+            if(gamepad2.right_stick_y > 0.1 || gamepad2.right_stick_y < -0.1)
+            {
+                knockPos += gamepad2.right_stick_y * knockMaxChange;
+                if(knockPos > 0.75)
+                {
+                    knockPos = 0.75;
+                }
+
+                if(knockPos < 0.0)
+                {
+                    knockPos = 0.0;
+                }
+
+                curiosity.knock.setPosition(knockPos);
+
+            }
+
+            if(gamepad2.right_bumper || gamepad2.right_trigger > 0.1)
+            {
+                if(gamepad2.right_bumper)
+                {
+                    clawPos += clawMaxChange;
+                }
+                if(gamepad2.right_trigger > 0.1)
+                {
+                    clawPos -= gamepad2.right_trigger * clawMaxChange;
+                }
+                if(clawPos > 1.0)
+                {
+                    clawPos = 1.0;
+                }
+
+                if(clawPos < 0.0)
+                {
+                    clawPos = 0.0;
+                }
+
+                curiosity.claw.setPosition(clawPos);
+
+            }
+
             //Sending telemetry for arm data
             telemetry.addData("armServoAdjustment", armServoAdjustment);
             telemetry.addData("Joint 1", curiosity.joint1.getPower());
             telemetry.addData("Joint 2", curiosity.joint2.getPosition());
+            telemetry.addData("Wrist Pos", curiosity.wrist.getPosition());
+            telemetry.addData("Knock Pos", curiosity.knock.getPosition());
+            telemetry.addData("Claw Pos", curiosity.claw.getPosition());
 
             telemetry.update();
 

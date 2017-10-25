@@ -14,10 +14,7 @@ public class CompAuto extends LinearOpMode
     RobotHardware robot = new RobotHardware();
     Drive drive = new Drive();
 
-    public DcMotor motorRF = null;
-    public DcMotor motorLF = null;
-    public DcMotor motorRB = null;
-    public DcMotor motorLB = null;
+    String color = "undecided";
 
     @Override
     public void runOpMode()
@@ -35,15 +32,38 @@ public class CompAuto extends LinearOpMode
         motors[1] = robot.motorRB;
         motors[2] = robot.motorLB;
         motors[3] = robot.motorLF;
+
+        robot.armBase.setPosition(1.0);
+        robot.arm.setPosition(1.0);
+
         waitForStart();
 
         drive.timeDrive(290, 0.4, driveStyle.STRAFE_LEFT, motors);
         sleep(2000);
+        robot.arm.setPosition(0.5);
+        sleep(1000);
+        robot.armBase.setPosition(0.7);
+        sleep(1000);
+        color = "red";
+        if(color == "blue")
+        {
+            robot.arm.setPosition(0.25);
+        }
+        if(color == "red")
+        {
+            robot.arm.setPosition(0.75);
+        }
+        sleep(1000);
+        robot.arm.setPosition(0.5);
+        sleep(1000);
+        robot.armBase.setPosition(1.0);
+        sleep(1000);
+        robot.arm.setPosition(1.0);
+        sleep(1000);
         drive.timeDrive(820, 0.5, driveStyle.FORWARD, motors);
         sleep(1000);
         drive.timeDrive(700, 0.5, driveStyle.STRAFE_RIGHT, motors);
-
-        //
+    }
     }
 
-}
+

@@ -133,12 +133,12 @@ public class OldRobotTele extends OpMode
                 cps = encoderCount * (1000/t);
                 //****For Averaging****//
                 a = ((a * (p - 1) + cps) / p);
-                if (a < -500 && autoAdjust) //Was -1800 on old flywheel
+                if (a < 500 && autoAdjust) //Was -1800 on old flywheel
                 {
-                    if (a > -2200) {
+                    if (a > 2200) {
                         launcherPower -= .008;
                     }
-                    if (a < -2300) {
+                    if (a < 2300) {
                         launcherPower += .008;
                     }
                 }
@@ -271,19 +271,23 @@ public class OldRobotTele extends OpMode
         }
         */
         //Setting the Popper Position
-        if ((gamepad2.right_trigger > 0.8 && a < -2200 && a > -2300 && cps < -2200))// || (gamepad2.right_trigger > 0.8 && !autoAdjust))
-        {
+        //if ((gamepad2.right_trigger > 0.8 && a > 2200 && a < 2400 && cps > 2200))// || (gamepad2.right_trigger > 0.8 && !autoAdjust))
+        //{
 
-            popperTime = true;
-            popperPosition = popperUp;
-            popperStart = System.currentTimeMillis();
-        }
+            //popperTime = true;
+            //popperPosition = popperUp;
+            //popperStart = System.currentTimeMillis();
+        //}
         if (gamepad2.left_trigger > 0.8 )
+        {
+            popperPosition = popperUp;
+        }
+        else if(gamepad2.left_trigger < 0.8)
         {
             popperPosition = popperDown;
         }
 
-        if(popperTime)
+        /*if(popperTime)
         {
             if(System.currentTimeMillis() - popperStart > 200)
             {
@@ -291,6 +295,7 @@ public class OldRobotTele extends OpMode
                 popperTime = false;
             }
         }
+        */
 
 
         if(gamepad2.dpad_up)
