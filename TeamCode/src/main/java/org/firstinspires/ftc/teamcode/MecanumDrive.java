@@ -28,8 +28,8 @@ public class MecanumDrive extends LinearOpMode
         robot.motorLB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.motorRB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        robot.armBase.setPosition(1.0);
-        robot.arm.setPosition(0.35);
+        robot.flapper.setPosition(1.0);
+        robot.slapper.setPosition(0.35);
 
         waitForStart();
 
@@ -68,7 +68,7 @@ public class MecanumDrive extends LinearOpMode
             if(gamepad1.y && !yState)
             {
                 yState = true;
-                robot.arm.setPosition(robot.arm.getPosition() + 0.05);
+                robot.slapper.setPosition(robot.slapper.getPosition() + 0.05);
             }
             else if(!gamepad1.y)
             {
@@ -78,7 +78,7 @@ public class MecanumDrive extends LinearOpMode
             if(gamepad1.a && !aState)
             {
                 aState = true;
-                robot.arm.setPosition(robot.arm.getPosition() - 0.05);
+                robot.slapper.setPosition(robot.slapper.getPosition() - 0.05);
             }
             else if(!gamepad1.a)
             {
@@ -88,9 +88,9 @@ public class MecanumDrive extends LinearOpMode
             if(gamepad1.x && !xState)
             {
                 xState = true;
-                if(robot.armBase.getPosition() >= 0.60 || robot.arm.getPosition() == 1)
+                if(robot.flapper.getPosition() >= 0.60 || robot.slapper.getPosition() == 1)
                 {
-                    robot.armBase.setPosition(robot.armBase.getPosition() - 0.05);
+                    robot.flapper.setPosition(robot.slapper.getPosition() - 0.05);
                 }
 
             }
@@ -102,9 +102,9 @@ public class MecanumDrive extends LinearOpMode
             if(gamepad1.b && !bState)
             {
                 bState = true;
-                if(robot.armBase.getPosition() >= 0.55 || robot.arm.getPosition() == 1)
+                if(robot.flapper.getPosition() >= 0.55 || robot.slapper.getPosition() == 1)
                 {
-                    robot.armBase.setPosition(robot.armBase.getPosition() + 0.05);
+                    robot.flapper.setPosition(robot.flapper.getPosition() + 0.05);
                 }
             }
             else if(!gamepad1.b)
@@ -112,8 +112,8 @@ public class MecanumDrive extends LinearOpMode
                 bState = false;
             }
 
-            telemetry.addData("armPos", robot.arm.getPosition());
-            telemetry.addData("armBasePos", robot.armBase.getPosition());
+            telemetry.addData("Slapper Pos", robot.slapper.getPosition());
+            telemetry.addData("Flapper Pos", robot.flapper.getPosition());
 
             telemetry.addData("Left Joystick X", gamepad1.left_stick_x);
             telemetry.addData("Left Joystick Y", gamepad1.left_stick_y);

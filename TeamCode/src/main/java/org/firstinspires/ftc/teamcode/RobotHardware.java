@@ -27,10 +27,6 @@ public class RobotHardware
     public Servo flapper = null;
     public Servo slapper = null;
 
-    //For Mecanum Testing - should be obsolete soon
-    public Servo armBase = null;
-    public Servo arm = null;
-
     boolean useEncoder = false;
 
     HardwareMap hwMap = null;
@@ -59,9 +55,6 @@ public class RobotHardware
         flapper = ahwMap.servo.get("flapper");
         slapper = ahwMap.servo.get("slapper");
 
-        //for mecanum testing - obsolete soon
-        armBase = ahwMap.servo.get("armBase");
-        arm = ahwMap.servo.get("arm");
 
         motorRF.setPower(0);
         motorLF.setPower(0);
