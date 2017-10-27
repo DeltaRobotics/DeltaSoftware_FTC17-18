@@ -201,13 +201,13 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
                 telemetry.addData("Jewel Color", jewelColorInt);
                 if (jewelColorInt == 0)
                 {
-                    telemetry.addData("Jewel Color", "Red");
+                    telemetry.addData("Jewel Color", "0 : Red");
                 } else if (jewelColorInt == 1)
                 {
-                    telemetry.addData("Jewel Color", "Blue");
+                    telemetry.addData("Jewel Color", "1 : Blue");
                 } else if (jewelColorInt == 2)
                 {
-                    telemetry.addData("Jewel Color", "Green? What Did You Do?");
+                    telemetry.addData("Jewel Color", "Green? What Did You Do? Green Shouldn't Even Be An Option!");
                 } else
                 {
                     telemetry.addData("Jewel Color", "Something's Wrong");

@@ -16,12 +16,12 @@ public class DRTeleOp extends LinearOpMode
     RobotHardware curiosity = new RobotHardware();
 
 
-    double slapperInit = 0.5;
+    double slapperInit = 0.8;
     double slapperPosition = 0.0;
     double flapperInit = 1.0;
     double flapperPosition = 0.0;
     double wristInit = 0.795;
-    double knockInit = 0.75;
+    double knockInit = 0.928;
     double clawInit = 0.646;
     double wristMaxChange = 0.005;
     double knockMaxChange = 0.005;
@@ -31,13 +31,16 @@ public class DRTeleOp extends LinearOpMode
     double clawPos = clawInit;
 
     double armServoAdjustment = 0.2;
-    double joint1MaxSpeed = 0.35;
+    double joint1MaxSpeed = 0.70;
 
     double joint2Position = 0.0;
     double joint3Position = 0.0;
 
     long initTime;
     long changeTime = 1200;
+    int last = 99999;
+    int joint1Midpoint = -111;
+    double speed = 1.0;
 
     boolean dPadUpState = false;
     boolean dPadDownState = false;
@@ -75,13 +78,24 @@ public class DRTeleOp extends LinearOpMode
             slapperPosition = Range.clip(slapperPosition, 0.05, 0.95);
             flapperPosition = Range.clip(flapperPosition, 0.05, 0.95);
             armServoAdjustment = Range.clip(armServoAdjustment, 0.2, 0.7);
+            knockPos = Range.clip(knockPos, 0.01, 0.928);
+            wristPos = Range.clip(wristPos, 0.01, 0.99);
 
+
+            if(gamepad1.a)
+            {
+                speed = 1.0;
+            }
+            else if(gamepad1.b)
+            {
+                speed = 0.5;
+            }
 
             //Setting drive motors for mecanum - gamepad 1 - driver
-            curiosity.motorRF.setPower((-gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x);
-            curiosity.motorLB.setPower(-(-gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x);
-            curiosity.motorRB.setPower(-(-gamepad1.left_stick_x + gamepad1.left_stick_y) - gamepad1.right_stick_x);
-            curiosity.motorLF.setPower((-gamepad1.left_stick_x + gamepad1.left_stick_y) - gamepad1.right_stick_x);
+            curiosity.motorRF.setPower(speed*((-gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x));
+            curiosity.motorLB.setPower(speed*(-(-gamepad1.left_stick_y - gamepad1.left_stick_x) - gamepad1.right_stick_x));
+            curiosity.motorRB.setPower(speed*(-(-gamepad1.left_stick_x + gamepad1.left_stick_y) - gamepad1.right_stick_x));
+            curiosity.motorLF.setPower(speed*(-gamepad1.left_stick_x + gamepad1.left_stick_y) - gamepad1.right_stick_x);
 
             //Driver - Flapper and Slapper manual controls
             if(gamepad1.right_trigger > 0.5)
@@ -97,7 +111,7 @@ public class DRTeleOp extends LinearOpMode
             {
                 flapperPosition =+ 0.05;
             }
-            else if(gamepad1.b)
+            else if(gamepad1.x)
             {
                 flapperPosition =- 0.05;
             }
@@ -126,7 +140,19 @@ public class DRTeleOp extends LinearOpMode
             }
 
             //Setting Joint 1
+
             curiosity.joint1.setPower(-(gamepad2.left_stick_y * joint1MaxSpeed));
+            if((curiosity.joint1.getCurrentPosition() < last) && (last != 99999) && (last < joint1Midpoint))
+            {
+                curiosity.joint1.setPower(-(gamepad2.left_stick_y * 0.1));
+            }
+
+            if((curiosity.joint1.getCurrentPosition() > last) && (last != 99999) && (last > joint1Midpoint))
+            {
+                curiosity.joint1.setPower(-(gamepad2.left_stick_y * 0.1));
+            }
+
+            last = curiosity.joint1.getCurrentPosition();
 
             //Setting Joint 2
             if(gamepad2.left_bumper)
@@ -145,15 +171,6 @@ public class DRTeleOp extends LinearOpMode
             if(gamepad2.right_stick_x > 0.1 || gamepad2.right_stick_x < -0.1)
             {
                 wristPos += (gamepad2.right_stick_x * wristMaxChange);
-                if(wristPos > 1.0)
-                {
-                    wristPos = 1.0;
-                }
-
-                if(wristPos < 0.0)
-                {
-                    wristPos = 0.0;
-                }
 
                 curiosity.wrist.setPosition(wristPos);
 
@@ -162,16 +179,6 @@ public class DRTeleOp extends LinearOpMode
             if(gamepad2.right_stick_y > 0.1 || gamepad2.right_stick_y < -0.1)
             {
                 knockPos += gamepad2.right_stick_y * knockMaxChange;
-                if(knockPos > 0.75)
-                {
-                    knockPos = 0.75;
-                }
-
-                if(knockPos < 0.0)
-                {
-                    knockPos = 0.0;
-                }
-
                 curiosity.knock.setPosition(knockPos);
 
             }
