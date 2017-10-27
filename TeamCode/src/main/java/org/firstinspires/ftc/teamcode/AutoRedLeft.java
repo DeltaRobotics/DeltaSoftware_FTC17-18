@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by User on 10/14/2017.
  */
 
-@Autonomous (name = "CompAuto", group = "")
-public class CompAuto extends LinearOpMode
+@Autonomous (name = "AutoRedLeft", group = "Auto")
+public class AutoRedLeft extends LinearOpMode
 {
     RobotHardware robot = new RobotHardware();
     Drive drive = new Drive();
@@ -38,8 +38,9 @@ public class CompAuto extends LinearOpMode
 
         waitForStart();
 
-        drive.timeDrive(290, 0.4, driveStyle.STRAFE_LEFT, motors);
+        drive.timeDrive(395, 0.4, driveStyle.STRAFE_LEFT, motors);
         sleep(2000);
+        /*
         robot.slapper.setPosition(0.5);
         sleep(1000);
         robot.flapper.setPosition(0.7);
@@ -60,10 +61,9 @@ public class CompAuto extends LinearOpMode
         sleep(1000);
         robot.slapper.setPosition(1.0);
         sleep(1000);
-        drive.timeDrive(820, 0.5, driveStyle.FORWARD, motors);
-        sleep(1000);
-        drive.timeDrive(700, 0.5, driveStyle.STRAFE_RIGHT, motors);
+        */
+        drive.timeDrive(950, 0.5, driveStyle.BACKWARD, motors);
     }
-    }
+}
 
 
