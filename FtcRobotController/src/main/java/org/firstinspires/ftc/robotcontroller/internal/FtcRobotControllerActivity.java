@@ -189,7 +189,6 @@ public class FtcRobotControllerActivity extends Activity
       });
     }
 
-    public FrameLayout screenshotLayout;
 
     public void removePreview(final OpModeCamera context) {
       runOnUiThread(new Runnable() {
@@ -211,7 +210,7 @@ public class FtcRobotControllerActivity extends Activity
       });
     }
 
-    public Bitmap captureScreenshot() {
+    /*public Bitmap captureScreenshot() {
         // image saving sd card path
         String mPath = Environment.getExternalStorageDirectory().toString() + "/" + System.currentTimeMillis() + ".jpg";
 
@@ -224,7 +223,7 @@ public class FtcRobotControllerActivity extends Activity
 
       return bitmap;
 
-      }
+      }*/
 
     protected class RobotRestarter implements Restarter {
 

@@ -128,13 +128,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       android:id="@+id/frameLayout">
 
 
-      <LinearLayout
-          android:id="@+id/cameraMonitorViewId"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="vertical"
-          />
-
       <!-- When visible, the error message will overlay and thus partially
            obscure part of the camera monitor. We make this trade off so as to
            allow for a bigger camera monitor view in the common case when the

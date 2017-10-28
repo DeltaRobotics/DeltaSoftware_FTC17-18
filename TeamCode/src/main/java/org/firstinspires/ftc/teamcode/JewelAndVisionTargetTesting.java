@@ -43,18 +43,18 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
 
     int jewelColorInt;
 
-    public View screenshot;
+    //public View screenshot;
 
 
-    OpenGLMatrix lastLocation = null;
+    //OpenGLMatrix lastLocation = null;
     //Initializing Vuforia Analysis
-    VuforiaLocalizer vuforia;
+    //VuforiaLocalizer vuforia;
 
     public void runOpMode()
     {
 
         //Both camera methods utilize the monitor of the Robot Controller Phone. In order to see the color of the jewel, we are not sending the vuforia data below.
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        /*int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
         //Used instead of the Robot Controller Monitor data
@@ -75,23 +75,23 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
 
-
-        //Resolution of image, currently set to 2 (higher number means less resolution but faster speed)
-        //setCameraDownsampling(1);
+*/
+        //Resolution of image, currently set to 1 (higher number means less resolution but faster speed)
+        setCameraDownsampling(1);
         //Takes some time, is initializing all of the camera's internal workings
-        //startCamera();
+        startCamera();
         //Stays Initialized, waits for the Driver's Station Button to be pressed
         waitForStart();
 
         //Activates Vuforia to begin searching for the Relic VuMark images
-        relicTrackables.activate();
+        //relicTrackables.activate();
 
         while (opModeIsActive())
         {
             telemetry.addData("Active", "OpMode");
-            //if (isCameraAvailable())
-            //{
-                telemetry.addData("Relic", "Analysis");
+            if (isCameraAvailable())
+            {
+                /*telemetry.addData("Relic", "Analysis");
                 //RELIC ANALYSIS
                 RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                 if (vuMark != RelicRecoveryVuMark.UNKNOWN)
@@ -129,30 +129,31 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
                 {
                     telemetry.addData("VuMark", "not visible");
                 }
-                telemetry.update();
+                */
+            telemetry.update();
 
 
+            if (imageReady())
+            {
 
-            //if (imageReady())
-            //{
-
-                //telemetry.addData("Width", width);
-                //telemetry.addData("Height", height);
+                telemetry.addData("Width", width);
+                telemetry.addData("Height", height);
 
                 int redValueLeft = -76800;
                 int blueValueLeft = -76800;
                 int greenValueLeft = -76800;
 
                 Bitmap rgbImage;
+                rgbImage = convertYuvImageToRgb(yuvImage, width, height, 1);
                 //The last value must correspond to the downsampling value from above
-                rgbImage = ((FtcRobotControllerActivity) hardwareMap.appContext).captureScreenshot();
+                //rgbImage = ((FtcRobotControllerActivity) hardwareMap.appContext).captureScreenshot();
 
                 telemetry.addData("Width", rgbImage.getWidth());
                 telemetry.addData("Height", rgbImage.getHeight());
-            telemetry.update();
+                telemetry.update();
 
 
-            for (int x = 240; x < 480; x++)
+                for (int x = 240; x < 480; x++)
                 {
                     for (int y = 568; y < 854; y++)
                     {
@@ -168,7 +169,7 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
                         {
                             rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
                         }
-                        if (x >= 240 && y == 854)
+                        if (x >= 240 && y == 853)
                         {
                             rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
                         }
@@ -216,15 +217,17 @@ public class JewelAndVisionTargetTesting extends LinearOpModeCamera
             }
 
 
+            }
+            stopCamera();
+            telemetry.addData("Not available?", "??");
+
+        }
+
         //}
-        stopCamera();
-        telemetry.addData("Not available?", "??");
-
-    }
-
-    //}
-    String format(OpenGLMatrix transformationMatrix)
+    /*String format(OpenGLMatrix transformationMatrix)
     {
         return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
+    */
     }
+}

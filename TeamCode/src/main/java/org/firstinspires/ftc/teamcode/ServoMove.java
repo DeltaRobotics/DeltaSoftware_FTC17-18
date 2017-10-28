@@ -9,22 +9,24 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class ServoMove extends LinearOpMode
 {
-    public void knockOffJewl(Servo[] servos)
+    public void knockOffJewl(Servo[] servos, int color)
     {
-        String color = "undecided";
         sleep(2000);
         servos[1].setPosition(0.3);
         sleep(1000);
         servos[0].setPosition(0.68);
         sleep(1000);
-        color = "blue";
-        if(color == "blue")
+        if(color == 0)
         {
             servos[1].setPosition(0.10);
         }
-        if(color == "red")
+        if(color == 1)
         {
             servos[1].setPosition(0.50);
+        }
+        if(color == 2)
+        {
+            servos[1].setPosition(0.3);
         }
         sleep(1000);
         servos[1].setPosition(0.3);
