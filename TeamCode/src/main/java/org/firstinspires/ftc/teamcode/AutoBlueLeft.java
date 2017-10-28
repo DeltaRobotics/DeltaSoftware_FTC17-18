@@ -22,6 +22,9 @@ public class AutoBlueLeft extends LinearOpModeCamera
     ServoMove servoMove = new ServoMove();
 
     String color = "undecided";
+    double wristInit = 0.375;
+    double knockInit = 0.928;
+    double clawInit = 0.93;
 
     int jewelColorInt;
 
@@ -48,6 +51,10 @@ public class AutoBlueLeft extends LinearOpModeCamera
 
         robot.slapper.setPosition(0.8);
         robot.flapper.setPosition(1.0);
+        robot.wrist.setPosition(wristInit);
+        robot.knock.setPosition(knockInit);
+        robot.claw.setPosition(clawInit);
+
 
         if (isCameraAvailable())
         {
@@ -73,8 +80,9 @@ public class AutoBlueLeft extends LinearOpModeCamera
                 telemetry.addData("Height", rgbImage.getHeight());
                 telemetry.update();
 
+                //This is for only saving the color image if needed.
 
-                for (int x = 480; x < 960; x++)
+                for (int x = 480; x < 800; x++)
                 {
                     for (int y = 850; y < 1280; y++)
                     {
@@ -100,7 +108,7 @@ public class AutoBlueLeft extends LinearOpModeCamera
                 SaveImage(rgbImage);
 
                 //Analyzing Jewel Color
-                for (int x = 480; x < 960; x++)
+                for (int x = 480; x < 800; x++)
                 {
                     for (int y = 850; y < 1280; y++)
                     {
@@ -140,7 +148,7 @@ public class AutoBlueLeft extends LinearOpModeCamera
             }
             stopCamera();
 
-            drive.timeDrive(395, 0.4, driveStyle.STRAFE_LEFT, motors);
+            drive.timeDrive(470, 0.4, driveStyle.STRAFE_LEFT, motors);
         /*sleep(2000);
         robot.slapper.setPosition(0.3);
         sleep(1000);
@@ -164,9 +172,9 @@ public class AutoBlueLeft extends LinearOpModeCamera
         sleep(1000);
         */
             servoMove.knockOffJewl(servos, jewelColorInt);
-            drive.timeDrive(750, 0.5, driveStyle.FORWARD, motors);
+            drive.timeDrive(800, 0.5, driveStyle.FORWARD, motors);
             sleep(1000);
-            drive.timeDrive(700, 0.5, driveStyle.STRAFE_RIGHT, motors);
+            drive.timeDrive(750, 0.5, driveStyle.STRAFE_RIGHT, motors);
         }
     }
 }
