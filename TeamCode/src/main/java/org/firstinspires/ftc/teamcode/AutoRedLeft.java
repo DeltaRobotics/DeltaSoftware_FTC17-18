@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import for_camera_opmodes.LinearOpModeCamera;
 /**
@@ -15,6 +17,8 @@ import for_camera_opmodes.LinearOpModeCamera;
 public class AutoRedLeft extends LinearOpModeCamera {
     RobotHardware robot = new RobotHardware();
     Drive drive = new Drive();
+
+    ServoMove servoMove = new ServoMove();
 
     String color = "undecided";
 
@@ -40,10 +44,16 @@ public class AutoRedLeft extends LinearOpModeCamera {
         motors[2] = robot.motorLB;
         motors[3] = robot.motorLF;
 
-        robot.flapper.setPosition(1.0);
-        robot.slapper.setPosition(1.0);
+        Servo[] servos = new Servo[2];
+        servos[0] = robot.flapper;
+        servos[1] = robot.slapper;
 
-        waitForStart();
+        robot.slapper.setPosition(0.8);
+        robot.flapper.setPosition(1.0);
+        robot.wrist.setPosition(wristInit);
+        robot.knock.setPosition(knockInit);
+        robot.claw.setPosition(clawInit);
+
 
         if (isCameraAvailable()) {
             //Resolution of image, currently set to 1 (higher number means less resolution but faster speed)
@@ -68,12 +78,12 @@ public class AutoRedLeft extends LinearOpModeCamera {
                 telemetry.update();
 
                 //This is for only saving the color image if needed.
-/*
-                for (int x = 480; x < 960; x++)
+
+                for (int x = 480; x < 680; x++)
                 {
                     for (int y = 850; y < 1280; y++)
                     {
-                        if (x == 0 && y >= 850)
+                        if (x == 679 && y >= 850)
                         {
                             rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
                         }
@@ -93,9 +103,9 @@ public class AutoRedLeft extends LinearOpModeCamera {
                 }
 
                 SaveImage(rgbImage);
-*/
+
                 //Analyzing Jewel Color
-                for (int x = 480; x < 800; x++) {
+                for (int x = 480; x < 680; x++) {
                     for (int y = 850; y < 1280; y++) {
                         int pixel = rgbImage.getPixel(x, y);
                         redValueLeft += red(pixel);
@@ -127,8 +137,26 @@ public class AutoRedLeft extends LinearOpModeCamera {
             }
             stopCamera();
 
+            if (jewelColorInt == 0)
+            {
+                telemetry.addData("Jewel Color", "0 : Red");
+            }
+            else if (jewelColorInt == 1)
+            {
+                telemetry.addData("Jewel Color", "1 : Blue");
+            }
+            else if (jewelColorInt == 2)
+            {
+                telemetry.addData("Jewel Color", "Green? What Did You Do? Green Shouldn't Even Be An Option!");
+            } else
+            {
+                telemetry.addData("Jewel Color", "Something's Wrong");
+            }
+            telemetry.update();
+
             drive.timeDrive(470, 0.4, driveStyle.STRAFE_LEFT, motors);
-            sleep(2000);
+            sleep(1000);
+            servoMove.knockOffJewel(servos, jewelColorInt, "red");
         /*
         robot.slapper.setPosition(0.5);
         sleep(1000);

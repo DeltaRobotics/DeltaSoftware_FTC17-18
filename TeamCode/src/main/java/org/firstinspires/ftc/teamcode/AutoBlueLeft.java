@@ -82,11 +82,11 @@ public class AutoBlueLeft extends LinearOpModeCamera
 
                 //This is for only saving the color image if needed.
 
-                for (int x = 480; x < 800; x++)
+                for (int x = 480; x < 680; x++)
                 {
                     for (int y = 850; y < 1280; y++)
                     {
-                        if (x == 0 && y >= 850)
+                        if (x == 679 && y >= 850)
                         {
                             rgbImage.setPixel(x, y, Color.rgb(0, 255, 0));
                         }
@@ -108,7 +108,7 @@ public class AutoBlueLeft extends LinearOpModeCamera
                 SaveImage(rgbImage);
 
                 //Analyzing Jewel Color
-                for (int x = 480; x < 800; x++)
+                for (int x = 480; x < 680; x++)
                 {
                     for (int y = 850; y < 1280; y++)
                     {
@@ -148,6 +148,23 @@ public class AutoBlueLeft extends LinearOpModeCamera
             }
             stopCamera();
 
+            if (jewelColorInt == 0)
+            {
+                telemetry.addData("Jewel Color", "0 : Red");
+            }
+            else if (jewelColorInt == 1)
+            {
+                telemetry.addData("Jewel Color", "1 : Blue");
+            }
+            else if (jewelColorInt == 2)
+            {
+                telemetry.addData("Jewel Color", "Green? What Did You Do? Green Shouldn't Even Be An Option!");
+            } else
+            {
+                telemetry.addData("Jewel Color", "Something's Wrong");
+            }
+            telemetry.update();
+
             drive.timeDrive(470, 0.4, driveStyle.STRAFE_LEFT, motors);
         /*sleep(2000);
         robot.slapper.setPosition(0.3);
@@ -171,7 +188,7 @@ public class AutoBlueLeft extends LinearOpModeCamera
         robot.slapper.setPosition(0.8);
         sleep(1000);
         */
-            servoMove.knockOffJewl(servos, jewelColorInt);
+            servoMove.knockOffJewel(servos, jewelColorInt, "blue");
             drive.timeDrive(800, 0.5, driveStyle.FORWARD, motors);
             sleep(1000);
             drive.timeDrive(750, 0.5, driveStyle.STRAFE_RIGHT, motors);
