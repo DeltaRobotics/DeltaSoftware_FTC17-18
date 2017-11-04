@@ -165,7 +165,9 @@ public class AutoBlueLeft extends LinearOpModeCamera
             }
             telemetry.update();
 
-            drive.timeDrive(470, 0.4, driveStyle.STRAFE_LEFT, motors);
+            drive.timeDrive(750, 0.4, driveStyle.STRAFE_LEFT, motors);
+            sleep(1000);
+            drive.timeDrive(800, 0.5, driveStyle.STRAFE_RIGHT, motors);
         /*sleep(2000);
         robot.slapper.setPosition(0.3);
         sleep(1000);
@@ -189,6 +191,9 @@ public class AutoBlueLeft extends LinearOpModeCamera
         sleep(1000);
         */
             servoMove.knockOffJewel(servos, jewelColorInt, "blue");
+            sleep(1000);
+            drive.timeDrive(85, 0.4, driveStyle.STRAFE_LEFT, motors);
+            sleep(1000);
             drive.timeDrive(800, 0.5, driveStyle.FORWARD, motors);
             sleep(1000);
             drive.timeDrive(750, 0.5, driveStyle.STRAFE_RIGHT, motors);

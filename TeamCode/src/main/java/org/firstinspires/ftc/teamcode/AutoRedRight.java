@@ -154,8 +154,9 @@ public class AutoRedRight extends LinearOpModeCamera
             }
             telemetry.update();
 
-        drive.timeDrive(470, 0.4, driveStyle.STRAFE_LEFT, motors);
-        sleep(1000);
+        drive.timeDrive(750, 0.4, driveStyle.STRAFE_LEFT, motors);
+            sleep(1000);
+            drive.timeDrive(800, 0.5, driveStyle.STRAFE_RIGHT, motors);
         /*
         robot.slapper.setPosition(0.5);
         sleep(1000);
@@ -179,6 +180,8 @@ public class AutoRedRight extends LinearOpModeCamera
         sleep(1000);
         */
         servoMove.knockOffJewel(servos, jewelColorInt, "red");
+            drive.timeDrive(85, 0.4, driveStyle.STRAFE_LEFT, motors);
+            sleep(1000);
         drive.timeDrive(800, 0.5, driveStyle.BACKWARD, motors);
         sleep(1000);
         drive.timeDrive(750, 0.5, driveStyle.STRAFE_RIGHT, motors);
