@@ -148,6 +148,7 @@ public class DRTeleOp extends LinearOpMode
                 curiosity.joint1.setPower(-(gamepad2.left_stick_y * 0.1));
             }
 
+
             if((curiosity.joint1.getCurrentPosition() > last) && (last != 99999) && (last > joint1Midpoint))
             {
                 curiosity.joint1.setPower(-(gamepad2.left_stick_y * 0.1));
