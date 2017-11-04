@@ -41,8 +41,8 @@ public class JustCameraJewel extends LinearOpModeCamera
                 //The last value must correspond to the downsampling value from above
                 rgbImage = convertYuvImageToRgb(yuvImage, width, height, 1);
 
-                telemetry.addData("Width", rgbImage.getWidth());
-                telemetry.addData("Height", rgbImage.getHeight());
+                //telemetry.addData("Width", rgbImage.getWidth());
+                //telemetry.addData("Height", rgbImage.getHeight());
                 telemetry.update();
 
                 //This is for only saving the color image if needed.

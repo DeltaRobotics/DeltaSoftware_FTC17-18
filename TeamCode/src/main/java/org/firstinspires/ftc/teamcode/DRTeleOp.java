@@ -169,6 +169,8 @@ public class DRTeleOp extends LinearOpMode
                 joint2Position = 0.5;
             }
 
+            //Removed capability of wrist for easier glyph control at first meet.
+            /*
             if(gamepad2.right_stick_x > 0.2 || gamepad2.right_stick_x < -0.2)
             {
                 wristPos += (gamepad2.right_stick_x * wristMaxChange);
@@ -176,6 +178,7 @@ public class DRTeleOp extends LinearOpMode
                 curiosity.wrist.setPosition(wristPos);
 
             }
+            */
 
             if(gamepad2.right_stick_y > 0.2 || gamepad2.right_stick_y < -0.2)
             {
