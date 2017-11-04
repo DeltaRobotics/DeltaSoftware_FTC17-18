@@ -7,7 +7,19 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 import for_camera_opmodes.LinearOpModeCamera;
 
@@ -17,7 +29,11 @@ import for_camera_opmodes.LinearOpModeCamera;
 @Autonomous(name="Jewel Only", group ="Autonomous Testing")
 public class JustCameraJewel extends LinearOpModeCamera
 {
+    VuforiaLocalizer vuforia;
     int jewelColorInt;
+
+    boolean vuforiaOn = true;
+    boolean relicAnalysis = true;
 
     public void runOpMode()
     {
@@ -86,9 +102,9 @@ public class JustCameraJewel extends LinearOpModeCamera
                 redValueLeft = normalizePixels(redValueLeft);
                 blueValueLeft = normalizePixels(blueValueLeft);
                 greenValueLeft = normalizePixels(greenValueLeft);
-                telemetry.addData("redValueLeft", redValueLeft);
-                telemetry.addData("blueValueLeft", blueValueLeft);
-                telemetry.addData("greenValueLeft", greenValueLeft);
+                //telemetry.addData("redValueLeft", redValueLeft);
+                //telemetry.addData("blueValueLeft", blueValueLeft);
+                //telemetry.addData("greenValueLeft", greenValueLeft);
 
 
                 jewelColorInt = highestColor(redValueLeft, blueValueLeft, greenValueLeft);
@@ -113,7 +129,42 @@ public class JustCameraJewel extends LinearOpModeCamera
             }
             stopCamera();
 
+            if(vuforiaOn)
+            {
+                //int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+                VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+
+                parameters.vuforiaLicenseKey = "ARab//j/////AAAAGa3dGFLc9ECfpTtxg0azy4sjU1xxnDSHmo2gKPM2BecEH5y5QNOI7fiEsflqB1" +
+                        "9dYDi655Mj6avzS4Vru7PegjjQCH1YVLwUZ4iX80Q02P0S+cA9Vw71hoZoI8nMdLgvgplYFv/M3ofqFezhHE7Afc9fq/ixLzl4P5d" +
+                        "z61T+SR43HzNb7At7XC3z9cSLqHD2ba+WWbKUPf6bcivgqimS8ekVeZHubkwfIqFVxXGZEfSScTfGa0/3l5/TaBpaUoUkz+JhAULt" +
+                        "pt2PwYdpCfhdCP3eo+2a8DJjP3eSXlCkuEoAUtUCUzCXWxS+pHDHCyUtEAxf8LaKvSh3aYoO7dNzmh4TspC3mFVrLbyZMzii8GgC";
+
+                parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
+                this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+
+                VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
+                VuforiaTrackable relicTemplate = relicTrackables.get(0);
+
+                relicTrackables.activate();
+
+                while (opModeIsActive() && relicAnalysis)
+                {
+                    RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+                    if (vuMark != RelicRecoveryVuMark.UNKNOWN)
+                    {
+                        telemetry.addData("VuMark", "%s visible", vuMark);
+                        relicAnalysis = false;
+                    }
+                    else
+                    {
+                        telemetry.addData("VuMark", "not visible");
+                    }
+                    telemetry.update();
+                }
+            }
+
         }
+
     }
 }
 

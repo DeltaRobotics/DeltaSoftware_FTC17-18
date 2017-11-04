@@ -17,8 +17,8 @@ public class RobotHardware
     public DcMotor motorLB = null;
 
     public DcMotor joint1 = null;
-    public Servo joint2 = null;
-    public Servo joint3 = null;
+    public DcMotor joint2 = null;
+    public DcMotor joint3 = null;
 
     public Servo wrist = null;
     public Servo knock = null;
@@ -45,8 +45,8 @@ public class RobotHardware
         motorLB = ahwMap.dcMotor.get("motorLB");
 
         joint1 = ahwMap.dcMotor.get("joint1");
-        joint2 = ahwMap.servo.get("joint2");
-        joint3 = ahwMap.servo.get("joint3");
+        joint2 = ahwMap.dcMotor.get("joint2");
+        joint3 = ahwMap.dcMotor.get("joint3");
 
         wrist = ahwMap.servo.get("wrist");
         knock = ahwMap.servo.get("knock");

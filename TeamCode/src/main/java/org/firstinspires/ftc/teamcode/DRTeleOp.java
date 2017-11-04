@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.Range;
  * Created by User on 10/17/2017.
  */
 
-@TeleOp(name = "DRTeleOp", group = "")
+@TeleOp(name = "DRTeleOp", group = "Testing")
 public class DRTeleOp extends LinearOpMode
 {
     RobotHardware curiosity = new RobotHardware();
@@ -33,9 +33,11 @@ public class DRTeleOp extends LinearOpMode
 
     double armServoAdjustment = 0.2;
     double joint1MaxSpeed = 0.70;
+    double joint2MaxSpeed = 0.50;
+    double joint3MaxSpeed = 0.50;
 
-    double joint2Position = 0.0;
-    double joint3Position = 0.0;
+    double joint2Target = 0.0;
+    double joint3Target = 0.0;
 
     long initTime;
     long changeTime = 1200;
@@ -57,19 +59,14 @@ public class DRTeleOp extends LinearOpMode
         curiosity.motorLB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         curiosity.motorRB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         curiosity.joint1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        curiosity.joint2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        curiosity.joint3.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         curiosity.slapper.setPosition(slapperInit);
         curiosity.flapper.setPosition(flapperInit);
         curiosity.wrist.setPosition(wristInit);
         curiosity.knock.setPosition(knockInit);
         curiosity.claw.setPosition(clawInit);
-
-        initTime = System.currentTimeMillis();
-        while((System.currentTimeMillis() - initTime) < changeTime)
-        {
-            curiosity.joint2.setPosition(0.35);
-        }
-        curiosity.joint2.setPosition(0.5); //stops servo from turning
 
         waitForStart();
 
@@ -142,32 +139,46 @@ public class DRTeleOp extends LinearOpMode
 
             //Setting Joint 1
 
-            curiosity.joint1.setPower(-(gamepad2.left_stick_y * joint1MaxSpeed));
-            if((curiosity.joint1.getCurrentPosition() < last) && (last != 99999) && (last < joint1Midpoint))
+            curiosity.joint3.setPower(-(gamepad2.left_stick_y * joint1MaxSpeed));
+            if((curiosity.joint3.getCurrentPosition() < last) && (last != 99999) && (last < joint1Midpoint))
             {
-                curiosity.joint1.setPower(-(gamepad2.left_stick_y * 0.1));
+                curiosity.joint3.setPower(-(gamepad2.left_stick_y * 0.1));
             }
 
 
-            if((curiosity.joint1.getCurrentPosition() > last) && (last != 99999) && (last > joint1Midpoint))
+            if((curiosity.joint3.getCurrentPosition() > last) && (last != 99999) && (last > joint1Midpoint))
             {
-                curiosity.joint1.setPower(-(gamepad2.left_stick_y * 0.1));
+                curiosity.joint3.setPower(-(gamepad2.left_stick_y * 0.1));
             }
 
-            last = curiosity.joint1.getCurrentPosition();
+            last = curiosity.joint3.getCurrentPosition();
 
             //Setting Joint 2
             if(gamepad2.left_bumper)
             {
-                joint2Position = (0.5 - armServoAdjustment);
+                curiosity.joint2.setPower(joint2MaxSpeed);
             }
             else if(gamepad2.left_trigger > 0.4)
             {
-                joint2Position = (0.5 + armServoAdjustment);
+                curiosity.joint2.setPower(-joint2MaxSpeed);
             }
             else
             {
-                joint2Position = 0.5;
+                curiosity.joint2.setPower(0.0);
+            }
+
+            //Setting Joint 3
+            if(gamepad2.dpad_up)
+            {
+                curiosity.joint1.setPower(joint3MaxSpeed);
+            }
+            else if(gamepad2.dpad_down)
+            {
+                curiosity.joint1.setPower(-joint3MaxSpeed);
+            }
+            else
+            {
+                curiosity.joint1.setPower(0.0);
             }
 
             //Removed capability of wrist for easier glyph control at first meet.
@@ -206,7 +217,8 @@ public class DRTeleOp extends LinearOpMode
             //Sending telemetry for arm data
             telemetry.addData("armServoAdjustment", armServoAdjustment);
             telemetry.addData("Joint 1", curiosity.joint1.getPower());
-            telemetry.addData("Joint 2", curiosity.joint2.getPosition());
+            telemetry.addData("Joint 2", curiosity.joint2.getCurrentPosition());
+            telemetry.addData("Joint 3", curiosity.joint3.getCurrentPosition());
             telemetry.addData("Wrist Pos", curiosity.wrist.getPosition());
             telemetry.addData("Knock Pos", curiosity.knock.getPosition());
             telemetry.addData("Claw Pos", curiosity.claw.getPosition());
@@ -216,7 +228,6 @@ public class DRTeleOp extends LinearOpMode
             //Actually setting the positions of the servos
             curiosity.slapper.setPosition(slapperPosition);
             curiosity.flapper.setPosition(flapperPosition);
-            curiosity.joint2.setPosition(joint2Position);
         }
     }
 }
