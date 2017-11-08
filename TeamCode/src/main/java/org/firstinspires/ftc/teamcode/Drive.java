@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import static java.lang.Math.abs;
 
 
 /**
@@ -35,6 +38,114 @@ public class Drive extends LinearOpMode
         return motorPowers;
     }
 
+
+    public boolean encoderDrive(int encoder, driveStyle drive, double motorPower, double timeout, DcMotor[] motors)
+    {
+        //ElapsedTime runtime = new ElapsedTime();
+
+        switch(drive)
+        {
+            case FORWARD:
+            {
+                    motors[0].setPower(setPower(0, -motorPower, 0)[0]);
+                    motors[1].setPower(setPower(0, -motorPower, 0)[1]);
+                    motors[2].setPower(setPower(0, -motorPower, 0)[2]);
+                    motors[3].setPower(setPower(0, -motorPower, 0)[3]);
+
+                while (motors[2].getCurrentPosition() <= encoder && opModeIsActive())
+                {
+                   telemetry.addData("motorLB Pos", motors[2].getCurrentPosition());
+                    telemetry.addData("motorRB", motors[1].getCurrentPosition());
+
+                    telemetry.update();
+                }
+
+
+                motors[0].setPower(setPower(-motorPower, 0, 0)[0]);
+                motors[1].setPower(setPower(-motorPower, 0, 0)[1]);
+                motors[2].setPower(setPower(-motorPower, 0, 0)[2]);
+                motors[3].setPower(setPower(-motorPower, 0, 0)[3]);
+
+
+            }
+
+            case BACKWARD:
+            {
+                motors[0].setPower(setPower(0, motorPower, 0)[0]);
+                motors[1].setPower(setPower(0, motorPower, 0)[1]);
+                motors[2].setPower(setPower(0, motorPower, 0)[2]);
+                motors[3].setPower(setPower(0, motorPower, 0)[3]);
+            }
+
+            case STRAFE_LEFT:
+            {
+                motors[0].setPower(setPower(-motorPower, 0, 0)[0]);
+                motors[1].setPower(setPower(-motorPower, 0, 0)[1]);
+                motors[2].setPower(setPower(-motorPower, 0, 0)[2]);
+                motors[3].setPower(setPower(-motorPower, 0, 0)[3]);
+            }
+
+            case STRAFE_RIGHT:
+            {
+                motors[0].setPower(setPower(motorPower, 0, 0)[0]);
+                motors[1].setPower(setPower(motorPower, 0, 0)[1]);
+                motors[2].setPower(setPower(motorPower, 0, 0)[2]);
+                motors[3].setPower(setPower(motorPower, 0, 0)[3]);
+            }
+
+            case FORWARD_LEFT:
+            {
+                motors[0].setPower(setPower(-motorPower, -motorPower, 0)[0]);
+                motors[1].setPower(setPower(-motorPower, -motorPower, 0)[1]);
+                motors[2].setPower(setPower(-motorPower, -motorPower, 0)[2]);
+                motors[3].setPower(setPower(-motorPower, -motorPower, 0)[3]);
+            }
+
+            case FORWARD_RIGHT:
+            {
+                motors[0].setPower(setPower(motorPower, -motorPower, 0)[0]);
+                motors[1].setPower(setPower(motorPower, -motorPower, 0)[1]);
+                motors[2].setPower(setPower(motorPower, -motorPower, 0)[2]);
+                motors[3].setPower(setPower(motorPower, -motorPower, 0)[3]);
+            }
+
+            case BACKWARD_LEFT:
+            {
+                motors[0].setPower(setPower(-motorPower, motorPower, 0)[0]);
+                motors[1].setPower(setPower(-motorPower, motorPower, 0)[1]);
+                motors[2].setPower(setPower(-motorPower, motorPower, 0)[2]);
+                motors[3].setPower(setPower(-motorPower, motorPower, 0)[3]);
+            }
+
+            case BACKWARD_RIGHT:
+            {
+                motors[0].setPower(setPower(motorPower, motorPower, 0)[0]);
+                motors[1].setPower(setPower(motorPower, motorPower, 0)[1]);
+                motors[2].setPower(setPower(motorPower, motorPower, 0)[2]);
+                motors[3].setPower(setPower(motorPower, motorPower, 0)[3]);
+            }
+
+            case PIVOT_LEFT:
+            {
+                motors[0].setPower(setPower(0, 0, -motorPower)[0]);
+                motors[1].setPower(setPower(0, 0, -motorPower)[1]);
+                motors[2].setPower(setPower(0, 0, -motorPower)[2]);
+                motors[3].setPower(setPower(0, 0, -motorPower)[3]);
+            }
+
+            case PIVOT_RIGHT:
+            {
+                motors[0].setPower(setPower(0, 0, motorPower)[0]);
+                motors[1].setPower(setPower(0, 0, motorPower)[1]);
+                motors[2].setPower(setPower(0, 0, motorPower)[2]);
+                motors[3].setPower(setPower(0, 0, motorPower)[3]);
+            }
+
+
+        }
+
+       return true;
+    }
 
     public void timeDrive(long time, double motorPower, driveStyle drive, DcMotor[] motors)
     {

@@ -297,7 +297,7 @@ public class AutoTesting extends LinearOpMode
         motors[3] = robot.motorLF;
 
 
-        drive.timeDrive(1000, 0.5, driveStyle.FORWARD, motors);
+        /*drive.timeDrive(1000, 0.5, driveStyle.FORWARD, motors);
         sleep(500);
         drive.timeDrive(1000, 0.5, driveStyle.BACKWARD, motors);
         sleep(500);
@@ -316,6 +316,20 @@ public class AutoTesting extends LinearOpMode
         drive.timeDrive(1000, 0.5, driveStyle.PIVOT_LEFT, motors);
         sleep(500);
         drive.timeDrive(1000, 0.5, driveStyle.PIVOT_RIGHT, motors);
+        */
+
+        //drive.encoderDrive(500, driveStyle.FORWARD, 0.5, 5000, motors);
+
+        robot.motorRF.setPower(drive.setPower(0, -0.5, 0)[0]);
+        robot.motorRB.setPower(drive.setPower(0, -0.5, 0)[1]);
+        robot.motorLB.setPower(drive.setPower(0, -0.5, 0)[2]);
+        robot.motorLF.setPower(drive.setPower(0, -0.5, 0)[3]);
+        while (opModeIsActive()) {
+            telemetry.addData("motorLB Pos", motors[2].getCurrentPosition());
+            telemetry.addData("motorRB", motors[1].getCurrentPosition());
+            telemetry.update();
+        }
+
 
 
 
