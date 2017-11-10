@@ -318,17 +318,33 @@ public class AutoTesting extends LinearOpMode
         drive.timeDrive(1000, 0.5, driveStyle.PIVOT_RIGHT, motors);
         */
 
-        //drive.encoderDrive(500, driveStyle.FORWARD, 0.5, 5000, motors);
+        drive.encoderDrive(500, driveStyle.FORWARD, 0.5, 5000, motors);
+        sleep(3000);
+        drive.encoderDrive(500, driveStyle.BACKWARD, 0.5, 5000, motors);
+        sleep(3000);
+        drive.encoderDrive(500, driveStyle.STRAFE_LEFT, 0.5, 5000, motors);
+        sleep(3000);
+        drive.encoderDrive(500, driveStyle.STRAFE_RIGHT, 0.5, 5000, motors);
+        sleep(3000);
+        drive.encoderDrive(500, driveStyle.FORWARD_RIGHT, 0.5, 5000, motors);
+        sleep(3000);
+        drive.encoderDrive(500, driveStyle.BACKWARD_LEFT, 0.5, 5000, motors);
+        sleep(3000);
+        drive.encoderDrive(500, driveStyle.FORWARD_LEFT, 0.5, 5000, motors);
+        sleep(3000);
+        drive.encoderDrive(500, driveStyle.BACKWARD_RIGHT, 0.5, 5000, motors);
+        sleep(3000);
+        drive.encoderDrive(500, driveStyle.PIVOT_LEFT, 0.5, 5000, motors);
+        sleep(3000);
+        drive.encoderDrive(500, driveStyle.PIVOT_RIGHT, 0.5, 5000, motors);
+        sleep(3000);
 
-        robot.motorRF.setPower(drive.setPower(0, -0.5, 0)[0]);
+        /*robot.motorRF.setPower(drive.setPower(0, -0.5, 0)[0]);
         robot.motorRB.setPower(drive.setPower(0, -0.5, 0)[1]);
         robot.motorLB.setPower(drive.setPower(0, -0.5, 0)[2]);
         robot.motorLF.setPower(drive.setPower(0, -0.5, 0)[3]);
-        while (opModeIsActive()) {
-            telemetry.addData("motorLB Pos", motors[2].getCurrentPosition());
-            telemetry.addData("motorRB", motors[1].getCurrentPosition());
-            telemetry.update();
-        }
+        */
+
 
 
 

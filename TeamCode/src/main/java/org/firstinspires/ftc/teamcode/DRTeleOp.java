@@ -34,7 +34,7 @@ public class DRTeleOp extends LinearOpMode
     double armServoAdjustment = 0.2;
     double joint1MaxSpeed = 0.70;
     double joint2MaxSpeed = 0.50;
-    double joint3MaxSpeed = 0.50;
+    double joint3MaxSpeed = 1.0;
 
     double joint2Target = 0.0;
     double joint3Target = 0.0;
@@ -139,7 +139,7 @@ public class DRTeleOp extends LinearOpMode
 
             //Setting Joint 1
 
-            curiosity.joint3.setPower(-(gamepad2.left_stick_y * joint1MaxSpeed));
+            curiosity.joint3.setPower(-(gamepad2.left_stick_y * joint3MaxSpeed));
             if((curiosity.joint3.getCurrentPosition() < last) && (last != 99999) && (last < joint1Midpoint))
             {
                 curiosity.joint3.setPower(-(gamepad2.left_stick_y * 0.1));
