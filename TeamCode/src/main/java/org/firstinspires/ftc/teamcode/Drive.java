@@ -39,7 +39,7 @@ public class Drive extends LinearOpMode
     }
 
 
-    public boolean encoderDrive(int encoder, driveStyle drive, double motorPower, double timeout, DcMotor[] motors)
+    public boolean encoderDrive(int encoderDelta, driveStyle drive, double motorPower, double timeout, DcMotor[] motors)
     {
         //ElapsedTime runtime = new ElapsedTime();
 
@@ -54,7 +54,7 @@ public class Drive extends LinearOpMode
                 motors[2].setPower(setPower(0, -motorPower, 0)[2]);
                 motors[3].setPower(setPower(0, -motorPower, 0)[3]);
 
-                while (motors[2].getCurrentPosition() >= (-encoder + encoderReadingLB))
+                while (motors[2].getCurrentPosition() >= (-encoderDelta + encoderReadingLB))
                 {
 
                 }
@@ -78,7 +78,7 @@ public class Drive extends LinearOpMode
                 motors[2].setPower(setPower(0, motorPower, 0)[2]);
                 motors[3].setPower(setPower(0, motorPower, 0)[3]);
 
-                while (motors[2].getCurrentPosition() <= (encoder + encoderReadingLB))
+                while (motors[2].getCurrentPosition() <= (encoderDelta + encoderReadingLB))
                 {
 
                 }
@@ -100,7 +100,7 @@ public class Drive extends LinearOpMode
                 motors[2].setPower(setPower(-motorPower, 0, 0)[2]);
                 motors[3].setPower(setPower(-motorPower, 0, 0)[3]);
 
-                while (motors[2].getCurrentPosition() <= (encoder + encoderReadingLB))
+                while (motors[2].getCurrentPosition() >= (encoderReadingLB - encoderDelta))
                 {
 
                 }
@@ -122,7 +122,7 @@ public class Drive extends LinearOpMode
                 motors[2].setPower(setPower(motorPower, 0, 0)[2]);
                 motors[3].setPower(setPower(motorPower, 0, 0)[3]);
 
-                while (motors[2].getCurrentPosition() >= (-encoder + encoderReadingLB))
+                while (motors[2].getCurrentPosition() >= (-encoderDelta + encoderReadingLB))
                 {
 
                 }
@@ -144,7 +144,7 @@ public class Drive extends LinearOpMode
                 motors[2].setPower(setPower(-motorPower, -motorPower, 0)[2]);
                 motors[3].setPower(setPower(-motorPower, -motorPower, 0)[3]);
 
-                while (motors[2].getCurrentPosition() <= (encoder + encoderReadingLB))
+                while (motors[2].getCurrentPosition() <= (encoderDelta + encoderReadingLB))
                 {
 
                 }
@@ -166,7 +166,7 @@ public class Drive extends LinearOpMode
                 motors[2].setPower(setPower(motorPower, -motorPower, 0)[2]);
                 motors[3].setPower(setPower(motorPower, -motorPower, 0)[3]);
 
-                while (motors[1].getCurrentPosition() >= (-encoder + encoderReadingRB))
+                while (motors[1].getCurrentPosition() >= (-encoderDelta + encoderReadingRB))
                 {
 
                 }
@@ -188,7 +188,7 @@ public class Drive extends LinearOpMode
                 motors[2].setPower(setPower(-motorPower, motorPower, 0)[2]);
                 motors[3].setPower(setPower(-motorPower, motorPower, 0)[3]);
 
-                while (motors[1].getCurrentPosition() <= (encoder + encoderReadingRB))
+                while (motors[1].getCurrentPosition() <= (encoderDelta + encoderReadingRB))
                 {
 
                 }
@@ -210,7 +210,7 @@ public class Drive extends LinearOpMode
                 motors[2].setPower(setPower(motorPower, motorPower, 0)[2]);
                 motors[3].setPower(setPower(motorPower, motorPower, 0)[3]);
 
-                while (motors[2].getCurrentPosition() >= (-encoder + encoderReadingLB))
+                while (motors[2].getCurrentPosition() >= (-encoderDelta + encoderReadingLB))
                 {
 
                 }
@@ -232,7 +232,7 @@ public class Drive extends LinearOpMode
                 motors[2].setPower(setPower(0, 0, -motorPower)[2]);
                 motors[3].setPower(setPower(0, 0, -motorPower)[3]);
 
-                while (motors[2].getCurrentPosition() >= (-encoder + encoderReadingLB))
+                while (motors[2].getCurrentPosition() >= (-encoderDelta + encoderReadingLB))
                 {
 
                 }
@@ -254,7 +254,7 @@ public class Drive extends LinearOpMode
                 motors[2].setPower(setPower(0, 0, motorPower)[2]);
                 motors[3].setPower(setPower(0, 0, motorPower)[3]);
 
-                while (motors[2].getCurrentPosition() <= (encoder + encoderReadingLB))
+                while (motors[2].getCurrentPosition() <= (encoderDelta + encoderReadingLB))
                 {
 
                 }
